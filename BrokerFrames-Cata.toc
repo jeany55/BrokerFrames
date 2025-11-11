@@ -1,0 +1,15 @@
+## Interface: 40402
+## Title: BrokerFrames
+## Notes: Show LDB data as small, simple, and customizable frames
+## Author: Jeany
+## Version: 1.0.0
+## RequiredDeps:
+## X-Curse-Project-ID: 1299016
+## SavedVariables: BrokerFramesDB
+## SavedVariablesPerCharacter:
+
+embeds.xml
+
+Locales\Locales.xml
+Constants.lua
+Core.lua
