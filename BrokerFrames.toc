@@ -13,3 +13,4 @@ embeds.xml
 Locales\Locales.xml
 Constants.lua
 Core.lua
+Options.lua
