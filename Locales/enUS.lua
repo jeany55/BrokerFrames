@@ -63,3 +63,17 @@ L["option_frame_insets_bottom"] = "Bottom"
 
 L["option_frame_backdrop_color"] = "Backdrop color"
 L["option_frame_backdrop_color_desc"] = "Background color of the backdrop"
+
+L["option_frame_lock"] = "Lock frame"
+L["option_frame_lock_desc"] = "Prevent the frame from being moved"
+L["option_frame_shift"] = "Require shift to be held to be dragged"
+L["option_frame_shift_desc"] = "If true, shift needs to be held for the frame to be dragged"
+
+L["option_frame_resize"] = "Resize frame automatically"
+L["option_frame_resize_desc"] = "Automatically calculate height and width based off of frame contents"
+
+L["option_frame_width"] = "Width"
+L["option_frame_width_desc"] = "Width of the frame"
+
+L["option_frame_height"] = "Height"
+L["option_frame_height_desc"] = "Width of the frame"
