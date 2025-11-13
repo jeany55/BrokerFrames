@@ -65,8 +65,7 @@ local inputFrameFieldText = ""
 local function makeNewFrameOption(name, ref)
   local optionsTab = {
     type = "group",
-    name = name,
-    inline = true,
+    name = "|cff9ff5a0" .. name .. "|r",
     args = {
       exec = {
         order = 0,
@@ -78,6 +77,126 @@ local function makeNewFrameOption(name, ref)
         name = L["option_frame_delete"],
         desc = L["option_frame_delete_desc"],
         confirm = function() return L["option_frame_delete_confirm"] end
+      },
+      look_and_feel = {
+        order = 1,
+        type = "group",
+        inline = true,
+        name = L["option_create_frame_look_feel"],
+        args = {
+          frameBackground = {
+            name = L["option_frame_create_bg"],
+            desc = L["option_frame_create_bg_desc"],
+            type = "input",
+            width = "full",
+            order = 0,
+            get = function() return "Interface\\Tooltips\\UI-Tooltip-Background" end,
+            set = function() end
+          },
+          frameEdge = {
+            name = L["option_frame_create_edge"],
+            desc = L["option_frame_create_edge_desc"],
+            type = "input",
+            width = "full",
+            order = 2,
+            get = function() return "Interface\\Tooltips\\UI-Tooltip-Border" end,
+            set = function() end
+          },
+          tile = {
+            name = L["option_frame_tile"],
+            desc = L["option_frame_tile_desc"],
+            type = "toggle",
+            width = "full",
+            order = 3,
+            get = function() return false end,
+            set = function() end
+          },
+          tileSize = {
+            name = L["option_frame_tile_size"],
+            desc = L["option_frame_tile_size_desc"],
+            type = "range",
+            width = "full",
+            disabled = true,
+            order = 4,
+            min = 0,
+            max = 30,
+            get = function() return 5 end,
+            set = function() end
+          },
+          edgeSize = {
+            name = L["option_frame_edge_size"],
+            desc = L["option_frame_edge_size_desc"],
+            type = "range",
+            width = "full",
+            order = 5,
+            min = 0,
+            max = 30,
+            get = function() return 5 end,
+            set = function() end
+          },
+          insets = {
+            name = L["option_frame_insets"],
+            inline = true,
+            type = "group",
+            order = 6,
+            args = {
+              left = {
+                name = L["option_frame_insets_left"],
+                desc = L["option_frame_insets_left_desc"],
+                type = "range",
+                width = "full",
+                disabled = true,
+                order = 4,
+                min = 0,
+                max = 30,
+                get = function() return 5 end,
+                set = function() end
+              },
+              right = {
+                name = L["option_frame_insets_right"],
+                desc = L["option_frame_insets_right_desc"],
+                type = "range",
+                width = "full",
+                order = 5,
+                min = 0,
+                max = 30,
+                get = function() return 5 end,
+                set = function() end
+              },
+              top = {
+                name = L["option_frame_insets_top"],
+                desc = L["option_frame_insets_top_desc"],
+                type = "range",
+                width = "full",
+                disabled = true,
+                order = 4,
+                min = 0,
+                max = 30,
+                get = function() return 5 end,
+                set = function() end
+              },
+              bottom = {
+                name = L["option_frame_insets_bottom"],
+                desc = L["option_frame_insets_bottom_desc"],
+                type = "range",
+                width = "full",
+                order = 5,
+                min = 0,
+                max = 30,
+                get = function() return 5 end,
+                set = function() end
+              }
+            }
+          },
+          backgroundColor = {
+            order = 5.1,
+            type = "color",
+            name = L["option_frame_backdrop_color"],
+            desc = L["option_frame_backdrop_color_desc"],
+            get = function() return 255, 255, 0, 1 end,
+            set = function() end
+          }
+        }
       }
     }
   }
@@ -94,7 +213,7 @@ private.frameConfig = {
   args = {
     create_new_frame = {
       type = "group",
-      inline = true,
+      -- inline = true,
       name = L["option_create_frame"],
       args = {
         header = { type = "description", order = 0, name = L["option_create_frame_header"] },
