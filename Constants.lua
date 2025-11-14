@@ -16,11 +16,14 @@ private.defaultFrameConfig = {
   background = "Interface\\Tooltips\\UI-Tooltip-Background",
   edge = "Interface\\Tooltips\\UI-Tooltip-Border",
   tile = true,
-  tileSize = 5,
-  edgeSize = 5,
-  insets = { left = 5, right = 5, top = 5, bottom = 5 },
-  backgroundColor = { r = 0, g = 0, b = 0 },
+  tileSize = 16,
+  edgeSize = 16,
+  insets = { left = 4, right = 4, top = 4, bottom = 4 },
+  backgroundColor = { r = 0.05, g = 0.05, b = 0.05, a = 1 },
+  borderColor = { r = 1.0, g = 1.0, b = 1.0, a = 1.0 },
+  borderBlend = "BLEND",
   resizeAutomatically = true,
   width = 100,
-  height = 25
+  height = 25,
+  rows = {}
 }

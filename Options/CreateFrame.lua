@@ -19,6 +19,9 @@ local function createFrame(frameName, options)
   frameSettings.name = frameName
 
   BrokerFrames.db.char.frames[frameName] = frameSettings
+  BrokerFrames:CreateOrUpdateFrame(frameSettings)
+
+  local function updateRenderedFrame() BrokerFrames:CreateOrUpdateFrame(BrokerFrames.db.char.frames[frameName]) end
 
   local optionsTab = {
     type = "group",
@@ -29,7 +32,7 @@ local function createFrame(frameName, options)
         func = function()
           private.frameConfig.args[frameName] = nil
           BrokerFrames.db.char.frames[frameName] = nil
-          -- ref.args[name] = nil
+          BrokerFrames:DeleteFrame(frameName)
           forceConfigRerender()
         end,
         type = "execute",
@@ -50,7 +53,10 @@ local function createFrame(frameName, options)
             name = L["option_frame_lock"],
             desc = L["option_frame_lock_desc"],
             get = function() return BrokerFrames.db.char.frames[frameName].locked end,
-            set = function(_, val) BrokerFrames.db.char.frames[frameName].locked = val end
+            set = function(_, val)
+              BrokerFrames.db.char.frames[frameName].locked = val
+              updateRenderedFrame()
+            end
           },
           require_shift = {
             order = 2,
@@ -60,14 +66,20 @@ local function createFrame(frameName, options)
             name = L["option_frame_shift"],
             desc = L["option_frame_shift_desc"],
             get = function() return BrokerFrames.db.char.frames[frameName].requireShift end,
-            set = function(_, val) BrokerFrames.db.char.frames[frameName].requireShift = val end
+            set = function(_, val)
+              BrokerFrames.db.char.frames[frameName].requireShift = val
+              updateRenderedFrame()
+            end
           },
           calculate_width = {
             order = 3,
             type = "toggle",
             width = "full",
             get = function() return BrokerFrames.db.char.frames[frameName].resizeAutomatically end,
-            set = function(_, val) BrokerFrames.db.char.frames[frameName].resizeAutomatically = val end,
+            set = function(_, val)
+              BrokerFrames.db.char.frames[frameName].resizeAutomatically = val
+              updateRenderedFrame()
+            end,
             name = L["option_frame_resize"],
             desc = L["option_frame_resize_desc"]
           },
@@ -75,7 +87,10 @@ local function createFrame(frameName, options)
             order = 4,
             type = "range",
             get = function() return BrokerFrames.db.char.frames[frameName].width end,
-            set = function(_, val) BrokerFrames.db.char.frames[frameName].width = val end,
+            set = function(_, val)
+              BrokerFrames.db.char.frames[frameName].width = val
+              updateRenderedFrame()
+            end,
             disabled = function() return BrokerFrames.db.char.frames[frameName].resizeAutomatically == true end,
             name = L["option_frame_width"],
             desc = L["option_frame_width_desc"],
@@ -86,7 +101,10 @@ local function createFrame(frameName, options)
             order = 5,
             type = "range",
             get = function() return BrokerFrames.db.char.frames[frameName].height end,
-            set = function(_, val) BrokerFrames.db.char.frames[frameName].height = val end,
+            set = function(_, val)
+              BrokerFrames.db.char.frames[frameName].height = val
+              updateRenderedFrame()
+            end,
             disabled = function() return BrokerFrames.db.char.frames[frameName].resizeAutomatically == true end,
             name = L["option_frame_height"],
             desc = L["option_frame_height_desc"],
@@ -108,7 +126,10 @@ local function createFrame(frameName, options)
             width = "full",
             order = 0,
             get = function() return BrokerFrames.db.char.frames[frameName].background end,
-            set = function(_, val) BrokerFrames.db.char.frames[frameName].background = val end
+            set = function(_, val)
+              BrokerFrames.db.char.frames[frameName].background = val
+              updateRenderedFrame()
+            end
           },
           frameEdge = {
             name = L["option_frame_create_edge"],
@@ -117,7 +138,10 @@ local function createFrame(frameName, options)
             width = "full",
             order = 2,
             get = function() return BrokerFrames.db.char.frames[frameName].edge end,
-            set = function(_, val) BrokerFrames.db.char.frames[frameName].edge = val end
+            set = function(_, val)
+              BrokerFrames.db.char.frames[frameName].edge = val
+              updateRenderedFrame()
+            end
           },
           tile = {
             name = L["option_frame_tile"],
@@ -126,7 +150,10 @@ local function createFrame(frameName, options)
             width = "full",
             order = 3,
             get = function() return BrokerFrames.db.char.frames[frameName].tile end,
-            set = function(_, val) BrokerFrames.db.char.frames[frameName].tile = val end
+            set = function(_, val)
+              BrokerFrames.db.char.frames[frameName].tile = val
+              updateRenderedFrame()
+            end
           },
           tileSize = {
             name = L["option_frame_tile_size"],
@@ -138,7 +165,10 @@ local function createFrame(frameName, options)
             min = 0,
             max = 30,
             get = function() return BrokerFrames.db.char.frames[frameName].tileSize end,
-            set = function(_, val) BrokerFrames.db.char.frames[frameName].tileSize = val end
+            set = function(_, val)
+              BrokerFrames.db.char.frames[frameName].tileSize = val
+              updateRenderedFrame()
+            end
           },
           edgeSize = {
             name = L["option_frame_edge_size"],
@@ -149,7 +179,10 @@ local function createFrame(frameName, options)
             min = 0,
             max = 30,
             get = function() return BrokerFrames.db.char.frames[frameName].edgeSize end,
-            set = function(_, val) BrokerFrames.db.char.frames[frameName].edgeSize = val end
+            set = function(_, val)
+              BrokerFrames.db.char.frames[frameName].edgeSize = val
+              updateRenderedFrame()
+            end
           },
           insets = {
             name = L["option_frame_insets"],
@@ -166,7 +199,10 @@ local function createFrame(frameName, options)
                 min = 0,
                 max = 30,
                 get = function() return BrokerFrames.db.char.frames[frameName].insets.left end,
-                set = function(_, val) BrokerFrames.db.char.frames[frameName].insets.left = val end
+                set = function(_, val)
+                  BrokerFrames.db.char.frames[frameName].insets.left = val
+                  updateRenderedFrame()
+                end
               },
               right = {
                 name = L["option_frame_insets_right"],
@@ -177,7 +213,10 @@ local function createFrame(frameName, options)
                 min = 0,
                 max = 30,
                 get = function() return BrokerFrames.db.char.frames[frameName].insets.right end,
-                set = function(_, val) BrokerFrames.db.char.frames[frameName].insets.right = val end
+                set = function(_, val)
+                  BrokerFrames.db.char.frames[frameName].insets.right = val
+                  updateRenderedFrame()
+                end
               },
               top = {
                 name = L["option_frame_insets_top"],
@@ -188,7 +227,10 @@ local function createFrame(frameName, options)
                 min = 0,
                 max = 30,
                 get = function() return BrokerFrames.db.char.frames[frameName].insets.top end,
-                set = function(_, val) BrokerFrames.db.char.frames[frameName].insets.top = val end
+                set = function(_, val)
+                  BrokerFrames.db.char.frames[frameName].insets.top = val
+                  updateRenderedFrame()
+                end
               },
               bottom = {
                 name = L["option_frame_insets_bottom"],
@@ -199,7 +241,10 @@ local function createFrame(frameName, options)
                 min = 0,
                 max = 30,
                 get = function() return BrokerFrames.db.char.frames[frameName].insets.bottom end,
-                set = function(_, val) BrokerFrames.db.char.frames[frameName].insets.bottom = val end
+                set = function(_, val)
+                  BrokerFrames.db.char.frames[frameName].insets.bottom = val
+                  updateRenderedFrame()
+                end
               }
             }
           },
@@ -208,24 +253,83 @@ local function createFrame(frameName, options)
             type = "color",
             name = L["option_frame_backdrop_color"],
             desc = L["option_frame_backdrop_color_desc"],
-            set = function(_, r, g, b, _)
+            width = "full",
+            hasAlpha = true,
+            set = function(_, r, g, b, a)
+              if (r == 0 and g == 0 and b == 0) then
+                -- Color picker malfunctions when picking black?
+                BrokerFrames.db.char.frames[frameName].backgroundColor.r = 0.05
+                BrokerFrames.db.char.frames[frameName].backgroundColor.g = 0.05
+                BrokerFrames.db.char.frames[frameName].backgroundColor.b = 0.05
+                BrokerFrames.db.char.frames[frameName].backgroundColor.a = 1
+                return
+              end
               BrokerFrames.db.char.frames[frameName].backgroundColor.r = r
               BrokerFrames.db.char.frames[frameName].backgroundColor.g = g
               BrokerFrames.db.char.frames[frameName].backgroundColor.b = b
+              BrokerFrames.db.char.frames[frameName].backgroundColor.a = a
+              updateRenderedFrame()
             end,
             get = function()
               return BrokerFrames.db.char.frames[frameName].backgroundColor.r,
                      BrokerFrames.db.char.frames[frameName].backgroundColor.g,
-                     BrokerFrames.db.char.frames[frameName].backgroundColor.b, 1
+                     BrokerFrames.db.char.frames[frameName].backgroundColor.b,
+                     BrokerFrames.db.char.frames[frameName].backgroundColor.a
+            end
+          },
+          borderColor = {
+            order = 5.2,
+            type = "color",
+            name = L["option_frame_border_color"],
+            desc = L["option_frame_border_color_desc"],
+            width = "full",
+            hasAlpha = true,
+            set = function(_, r, g, b, a)
+              if (r == 0 and g == 0 and b == 0) then
+                -- Color picker malfunctions when picking black?
+                BrokerFrames.db.char.frames[frameName].borderColor.r = 0.05
+                BrokerFrames.db.char.frames[frameName].borderColor.g = 0.05
+                BrokerFrames.db.char.frames[frameName].borderColor.b = 0.05
+                BrokerFrames.db.char.frames[frameName].borderColor.a = 1
+                return
+              end
+              BrokerFrames.db.char.frames[frameName].borderColor.r = r
+              BrokerFrames.db.char.frames[frameName].borderColor.g = g
+              BrokerFrames.db.char.frames[frameName].borderColor.b = b
+              BrokerFrames.db.char.frames[frameName].borderColor.a = a
+              updateRenderedFrame()
+            end,
+            get = function()
+              return BrokerFrames.db.char.frames[frameName].borderColor.r, BrokerFrames.db.char.frames[frameName].borderColor.g,
+                     BrokerFrames.db.char.frames[frameName].borderColor.b, BrokerFrames.db.char.frames[frameName].borderColor.a
+            end
+          },
+          borderStyle = {
+            order = 5.3,
+            type = "select",
+            name = L["option_border_blend"],
+            desc = L["option_border_blend_desc"],
+            values = {
+              ADD = L["option_border_blend_add"],
+              BLEND = L["option_border_blend_blend"],
+              MOD = L["option_border_blend_mod"],
+              ALPHAKEY = L["option_border_blend_alphakey"],
+              DISABLE = L["option_border_blend_disable"],
+              OVERLAY = L["option_border_blend_overlay"]
+            },
+            get = function() return BrokerFrames.db.char.frames[frameName].borderBlend end,
+            set = function(_, val)
+              BrokerFrames.db.char.frames[frameName].borderBlend = val
+              updateRenderedFrame()
             end
           }
         }
+
       }
     }
   }
 
   private.frameConfig.args[frameName] = optionsTab
-
   forceConfigRerender()
 end
 

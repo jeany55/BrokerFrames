@@ -6,6 +6,7 @@ local L = LibStub("AceLocale-3.0"):NewLocale("BrokerFrames", "enUS", true, true)
 
 L["option_category_general"] = "General"
 L["option_category_frames"] = "Frames"
+L["option_category_templates"] = "Templates"
 L["option_category_ldb_info"] = "Loaded LDB data"
 
 L["option_create_frame"] = "Create a new frame"
@@ -64,6 +65,9 @@ L["option_frame_insets_bottom"] = "Bottom"
 L["option_frame_backdrop_color"] = "Backdrop color"
 L["option_frame_backdrop_color_desc"] = "Background color of the backdrop"
 
+L["option_frame_border_color"] = "Border color"
+L["option_frame_border_color_desc"] = "Border color of the frame"
+
 L["option_frame_lock"] = "Lock frame"
 L["option_frame_lock_desc"] = "Prevent the frame from being moved"
 L["option_frame_shift"] = "Require shift to be held to be dragged"
@@ -77,3 +81,13 @@ L["option_frame_width_desc"] = "Width of the frame"
 
 L["option_frame_height"] = "Height"
 L["option_frame_height_desc"] = "Width of the frame"
+
+L["option_border_blend"] = "Border style"
+L["option_border_blend_desc"] = "How to render the border texture"
+
+L["option_border_blend_add"] = "Add"
+L["option_border_blend_blend"] = "Blend"
+L["option_border_blend_mod"] = "Mod"
+L["option_border_blend_alphakey"] = "AlphaKey"
+L["option_border_blend_disable"] = "Disable"
+L["option_border_blend_overlay"] = "Overlay"
