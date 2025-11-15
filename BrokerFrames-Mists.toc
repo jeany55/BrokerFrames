@@ -13,6 +13,7 @@ embeds.xml
 Locales\Locales.xml
 Constants.lua
 Core.lua
+Utils.lua
 Options\Options.lua
 Options\CreateFrame.lua
 GUI\Frames.lua

@@ -13,10 +13,94 @@ local function forceConfigRerender()
   ACR:NotifyChange(constants.ADDON_NAME)
 end
 
+local function addDataRow(frameName, rowSettings, rowName)
+
+  local rowSettings = rowSettings and rowSettings or private.copy(private.defaultRowConfig)
+  local keyName = rowName and rowName or private.generateUuid()
+
+  BrokerFrames.db.char.frames[frameName].rows[keyName] = rowSettings
+
+  private.frameConfig.args[frameName].args.data.args[keyName] = {
+    type = "group",
+    inline = true,
+    name = L["option_data_row"],
+    args = {
+      delete = {
+        type = "execute",
+        name = L["option_delete_row"],
+        order = 0,
+        desc = L["option_delete_row_desc"],
+        confirm = function() return L["option_delete_row_confirm"] end,
+        func = function()
+          private.frameConfig.args[frameName].args.data.args[keyName] = nil
+          BrokerFrames.db.char.frames[frameName].rows[keyName] = nil
+          forceConfigRerender()
+        end
+      },
+      selection = {
+        order = 1,
+        name = L["option_row_type"],
+        desc = L["option_row_type_desc"],
+        type = "select",
+        width = 1.5,
+        values = function()
+          local returnTable = {}
+          for key, value in pairs(private.LDBData) do
+            returnTable[key] = value.label and value.label or key
+          end
+          return returnTable
+        end,
+        get = function() return BrokerFrames.db.char.frames[frameName].rows[keyName].dataType end,
+        set = function(_, val) BrokerFrames.db.char.frames[frameName].rows[keyName].dataType = val end
+      },
+      label = {
+        type = "group",
+        inline = true,
+        order = 2,
+        name = L["label"],
+        args = {
+          show = {
+            type = "toggle",
+            name = L["option_row_label_toggle"],
+            order = 1,
+            width = "full",
+            desc = L["option_row_label_toggle_desc"],
+            get = function() return BrokerFrames.db.char.frames[frameName].rows[keyName].showLabel end,
+            set = function(_, val) BrokerFrames.db.char.frames[frameName].rows[keyName].showLabel = val end
+          },
+          default = {
+            type = "toggle",
+            name = L["option_row_label_ldb_toggle"],
+            order = 2,
+            disabled = function() return BrokerFrames.db.char.frames[frameName].rows[keyName].showLabel == false end,
+            desc = L["option_row_label_ldb_toggle_desc"],
+            get = function() return BrokerFrames.db.char.frames[frameName].rows[keyName].useLabelFromLdb end,
+            set = function(_, val) BrokerFrames.db.char.frames[frameName].rows[keyName].useLabelFromLdb = val end
+          },
+          labelText = {
+            type = "input",
+            name = L["option_row_label_custom"],
+            desc = L["option_row_label_custom_desc"],
+            order = 3,
+            get = function() return BrokerFrames.db.char.frames[frameName].rows[keyName].customLabel end,
+            set = function(_, val) BrokerFrames.db.char.frames[frameName].rows[keyName].customLabel = val end,
+            disabled = function()
+              return BrokerFrames.db.char.frames[frameName].rows[keyName].showLabel == false or
+                         BrokerFrames.db.char.frames[frameName].rows[keyName].useLabelFromLdb == true
+            end
+          }
+        }
+      }
+    }
+  }
+
+end
+
 -- Creates a frame in the options menu and inserts into addon database. If no options is passed in then defaults are used
 local function createFrame(frameName, options)
-  local frameSettings = options and options or private.defaultFrameConfig
+  local frameSettings = options and options or private.copy(private.defaultFrameConfig)
   frameSettings.name = frameName
+  print(frameName)
 
   BrokerFrames.db.char.frames[frameName] = frameSettings
   BrokerFrames:CreateOrUpdateFrame(frameSettings)
@@ -33,6 +117,7 @@ local function createFrame(frameName, options)
           private.frameConfig.args[frameName] = nil
           BrokerFrames.db.char.frames[frameName] = nil
           BrokerFrames:DeleteFrame(frameName)
+
           forceConfigRerender()
         end,
         type = "execute",
@@ -113,8 +198,26 @@ local function createFrame(frameName, options)
           }
         }
       },
-      look_and_feel = {
+      data = {
+        type = "group",
+        inline = true,
         order = 1,
+        name = L["option_frame_data"],
+        args = {
+          add = {
+            type = "execute",
+            name = L["option_frame_add_data"],
+            desc = L["option_frame_add_data_desc"],
+            order = 0,
+            func = function()
+              addDataRow(frameName)
+              forceConfigRerender()
+            end
+          }
+        }
+      },
+      look_and_feel = {
+        order = 2,
         type = "group",
         inline = true,
         name = L["option_create_frame_look_feel"],
@@ -330,6 +433,11 @@ local function createFrame(frameName, options)
   }
 
   private.frameConfig.args[frameName] = optionsTab
+
+  for row, value in pairs(frameSettings.rows) do
+    addDataRow(frameName, value, row)
+  end
+
   forceConfigRerender()
 end
 
@@ -365,7 +473,7 @@ private.frameConfig = {
             inputFrameFieldInput = ""
           end,
           name = L["option_create_frame_exec"],
-          disabled = function() return inputFrameFieldText == "" end,
+          disabled = function() return inputFrameFieldInput == "" end,
           desc = function() return format(L["option_create_frame_exec_desc"], inputFrameFieldInput) end
         }
       }

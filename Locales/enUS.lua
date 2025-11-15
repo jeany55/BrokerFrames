@@ -33,10 +33,11 @@ L["option_create_frame_exec_desc"] =
     "Create a frame called '%s'. Once you create it, a new row for it will appear in addon options."
 
 L["option_create_frame_error_exists"] = "A frame with that name already exists"
+L["option_create_frame_error_empty"] = "Enter in a name into the field and click set"
 
 L["option_frame_delete"] = "Delete frame"
 L["option_frame_delete_desc"] = "Delete this frame. |cffff0000Irreversible!|r"
-L["option_frame_delete_confirm"] = "Are you sure you want to delete this frame. |cffff0000This is irreversible!|r"
+L["option_frame_delete_confirm"] = "Are you sure you want to delete this frame? |cffff0000This is irreversible!|r"
 
 L["option_create_frame_look_feel"] = "Look and feel"
 
@@ -91,3 +92,29 @@ L["option_border_blend_mod"] = "Mod"
 L["option_border_blend_alphakey"] = "AlphaKey"
 L["option_border_blend_disable"] = "Disable"
 L["option_border_blend_overlay"] = "Overlay"
+
+L["option_frame_data"] = "Data"
+L["option_frame_add_data"] = "Add data row"
+L["option_frame_add_data_desc"] = "Adds a new data row, showing you LDB data on this frame"
+
+L["option_data_row"] = "Data row"
+
+L["option_delete_row"] = "Delete data row"
+L["option_delete_row_desc"] = "Delete this data row. |cffff0000Irreversible!|r"
+L["option_delete_row_confirm"] = "Are you sure you want to delete this row? |cffff0000This is irreversible!|r"
+
+L["option_row_type"] = "Data type"
+L["option_row_type_desc"] = "The LDB data to display"
+
+L["label"] = "Label"
+L["value"] = "Value"
+
+L["option_row_label_toggle"] = "Show label"
+L["option_row_label_toggle_desc"] = "Show label for this item"
+
+L["option_row_label_ldb_toggle"] = "Use label from LDB"
+L["option_row_label_ldb_toggle_desc"] = "Show the label value from LDB"
+
+L["option_row_label_custom"] = "Custom label"
+L["option_row_label_custom_desc"] = "Override the label value with the following text"
+

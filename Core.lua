@@ -2,6 +2,8 @@
 local _, private = ...
 local BrokerFrames = LibStub("AceAddon-3.0"):NewAddon(private.constants.ADDON_NAME, "AceConsole-3.0", "AceEvent-3.0")
 
+BrokerFrames:RegisterChatCommand("bf", "HandleSlashCommand")
+
 private.LDBData = {}
 private.frames = {}
 
@@ -29,9 +31,12 @@ function BrokerFrames:OnInitialize()
   BrokerFrames:RegisterOptions()
 end
 
+function BrokerFrames:HandleSlashCommand(command) print(private.generateUuid()) end
+
 ---Print a message to the chat window if the user has turned on debug messages in addon settings
 function BrokerFrames:PrintDebugMessage(message, ...)
   if self.db.char.addonOptions.showDebugMessages == true then
     BrokerFrames:Printf("|cffff0000[Debug]|r " .. message, ...)
   end
 end
+

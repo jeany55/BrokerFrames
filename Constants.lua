@@ -27,3 +27,5 @@ private.defaultFrameConfig = {
   height = 25,
   rows = {}
 }
+
+private.defaultRowConfig = { dataType = "", showLabel = true, useLabelFromLdb = true, customLabel = "" }
